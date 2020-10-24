@@ -38,7 +38,7 @@ module.exports = {
     },
     proxy: {
       '/api': {
-        target: '<url>',
+        target: 'http://yapi.yuan-chuang.com/mock/30',
         pathRewrite: {
             '^/api' : '/api'
         }

@@ -1,4 +1,7 @@
-import { asyncRoutes, constantRoutes } from '@/router'
+import { constantRoutes } from '@/router'
+import { getRoutes } from '@/api/role'
+import Layout from '@/layout'
+const _import = require('../../router/_import_' + process.env.NODE_ENV)
 
 /**
  * Use meta.role to determine if the current user has permission
@@ -11,6 +14,44 @@ function hasPermission(roles, route) {
   } else {
     return true
   }
+}
+
+// export const loadView = (view) => {
+//   return (resolve) => import([`@/${view}`], resolve)
+// }
+
+/**
+ * 把后台返回菜单组装成routes要求的格式
+ * @param {*} routes
+ */
+export function getAsyncRoutes(routes) {
+  const res = []
+  const keys = ['path', 'name', 'children', 'redirect', 'alwaysShow', 'meta', 'hidden']
+  routes.forEach(item => {
+    const newItem = {}
+    if (item.component) {
+      if (item.component === 'layout/Layout') {
+        newItem.component = Layout
+      } else {
+        newItem.component = _import(item.component)
+        console.log(_import(item.component))
+        // newItem.component = loadView(item.component)
+        // newItem.component = getComponent(item.component).then(res => {
+        //   console.log(res)
+        // })
+      }
+    }
+    for (const key in item) {
+      if (keys.includes(key)) {
+        newItem[key] = item[key]
+      }
+    }
+    if (newItem.children && newItem.children.length) {
+      newItem.children = getAsyncRoutes(item.children)
+    }
+    res.push(newItem)
+  })
+  return res
 }
 
 /**
@@ -47,16 +88,15 @@ const mutations = {
 }
 
 const actions = {
-  generateRoutes({ commit }, roles) {
+  generateRoutes({ commit }) {
     return new Promise(resolve => {
       let accessedRoutes
-      if (roles.includes('admin')) {
-        accessedRoutes = asyncRoutes || []
-      } else {
-        accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
-      }
-      commit('SET_ROUTES', accessedRoutes)
-      resolve(accessedRoutes)
+      getRoutes().then(res => {
+        const asyncRoutes = getAsyncRoutes(res.data.list || []) // 对路由格式进行处理
+        accessedRoutes = asyncRoutes
+        commit('SET_ROUTES', accessedRoutes)
+        resolve(accessedRoutes)
+      })
     })
   }
 }

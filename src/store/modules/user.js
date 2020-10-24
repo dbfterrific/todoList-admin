@@ -1,9 +1,10 @@
 import { login, logout, getInfo } from '@/api/user'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getToken, setToken, removeToken, setWindowId, getWindowId, removeWindowId } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
 const state = {
   token: getToken(),
+  windowId: getWindowId(),
   name: '',
   avatar: '',
   introduction: '',
@@ -25,6 +26,9 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  SET_WINDOWID: (state, id) => {
+    state.windowId = id
   }
 }
 
@@ -37,6 +41,8 @@ const actions = {
         const { data } = response
         commit('SET_TOKEN', data.token)
         setToken(data.token)
+        commit('SET_WINDOWID', data.windowId)
+        setWindowId(data.windowId)
         resolve()
       }).catch(error => {
         reject(error)
@@ -96,8 +102,10 @@ const actions = {
   resetToken({ commit }) {
     return new Promise(resolve => {
       commit('SET_TOKEN', '')
+      commit('SET_WINDOWID', '')
       commit('SET_ROLES', [])
       removeToken()
+      removeWindowId()
       resolve()
     })
   },
