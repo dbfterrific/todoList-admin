@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="handleAddWindow">新增角色</el-button>
+    <el-button type="primary" @click="handleAddWindow">新增窗口</el-button>
 
     <el-table :data="windowList" style="width: 100%;margin-top:30px;" border>
       <el-table-column align="center" label="ID">
@@ -8,22 +8,32 @@
           {{ scope.row.id }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="角色名称">
+      <el-table-column align="center" label="标题">
         <template slot-scope="scope">
-          {{ scope.row.name }}
+          {{ scope.row.title }}
         </template>
       </el-table-column>
       <el-table-column prop="window_no" align="header-center" label="窗口编号" />
-      <el-table-column align="center" label="菜单">
+      <el-table-column align="center" label="创建时间">
         <template slot-scope="scope">
-          {{ scope.row.menu }}
+          {{ scope.row.create_time }}
         </template>
       </el-table-column>
-      <!-- <el-table-column align="center" label="节点">
+      <el-table-column align="center" label="更新时间">
         <template slot-scope="scope">
-          {{ scope.row.node }}
+          {{ scope.row.update_time }}
         </template>
-      </el-table-column> -->
+      </el-table-column>
+      <el-table-column align="center" label="业务ID">
+        <template slot-scope="scope">
+          {{ scope.row.businessData.id }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="业务标题">
+        <template slot-scope="scope">
+          {{ scope.row.businessData.title }}
+        </template>
+      </el-table-column>
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
           <!-- <el-button type="primary" size="small" @click="handleEdit(scope)">编辑</el-button> -->
@@ -43,36 +53,27 @@
     </div>
 
     <el-dialog :visible.sync="dialogVisible" :title="'新增窗口'" @close="onClose">
-      <el-form :model="addRole" label-width="80px" label-position="left">
-        <el-form-item label="角色名称">
-          <el-input v-model="addRole.name" placeholder="角色名称" />
+      <el-form :model="addWindow" label-width="80px" label-position="left">
+        <el-form-item label="业务ID">
+          <el-input v-model="addWindow.businessId" placeholder="业务ID" />
         </el-form-item>
-        <el-form-item label="菜单">
-          <el-tree
-            ref="tree"
-            :data="menuData"
-            show-checkbox
-            default-expand-all
-            node-key="id"
-            highlight-current
-            :props="defaultProps"
-          />
+        <el-form-item label="窗口名称">
+          <el-input v-model="addWindow.title" placeholder="窗口名称" />
         </el-form-item>
-        <!-- <el-form-item label="窗口编号">
-          <el-input v-model="addRole.windowNo" placeholder="窗口编号" />
-        </el-form-item> -->
+        <el-form-item label="窗口编号">
+          <el-input v-model="addWindow.windowNo" placeholder="窗口编号" />
+        </el-form-item>
       </el-form>
       <div style="text-align:right;">
         <el-button type="danger" @click="dialogVisible=false">取消</el-button>
-        <el-button type="primary" @click="confirmRole">确认</el-button>
+        <el-button type="primary" @click="confirmWindow">确认</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { roleListApi, addRole, deleteRole } from '@/api/user'
-import { getRoutes } from '@/api/role'
+import { windowListApi, windowDeleteApi, windowCreateApi } from '@/api/order'
 
 export default {
   data() {
@@ -80,7 +81,11 @@ export default {
       page: 1,
       pageSize: 10,
       total: 0,
-      addRole: {},
+      addWindow: {
+        businessId: '',
+        title: '',
+        windowNo: ''
+      },
       routes: [],
       windowList: [],
       dialogVisible: false,
@@ -88,8 +93,7 @@ export default {
       defaultProps: {
         children: 'children',
         label: 'title'
-      },
-      menuData: []
+      }
     }
   },
   computed: {
@@ -99,53 +103,48 @@ export default {
   },
   created() {
     // Mock: get all routes and roles list from server
-    this.getRoleList()
+    this.getWindowList()
   },
   methods: {
     handleCurrentChange(val) {
       this.page = val
-      this.getRoleList()
+      this.getWindowList()
     },
     onClose() {
-      for (const key in this.addRole) {
-        this.addRole[key] = ''
+      for (const key in this.addWindow) {
+        this.addWindow[key] = ''
       }
     },
-    async getRoleList() {
-      const res = await roleListApi({ page: this.page, pageSize: this.pageSize })
+    async getWindowList() {
+      const res = await windowListApi({ page: this.page, pageSize: this.pageSize })
       this.page = res.data.page
       this.total = res.data.count
       this.pageSize = res.data.pageSize
       this.windowList = res.list
     },
     handleAddWindow() {
-      getRoutes().then(res => {
-        this.menuData = res.data.list
-      })
       this.dialogVisible = true
     },
-    confirmRole() {
-      const selectedKeys = this.$refs.tree.getCheckedKeys()
-      console.log(selectedKeys, 'selectedKeys')
-      addRole({ ...this.addRole, menu: selectedKeys }).then(res => {
+    confirmWindow() {
+      windowCreateApi(this.addWindow).then(res => {
         this.$message.success('添加成功')
         this.dialogVisible = false
-        this.getRoleList()
+        this.getWindowList()
       })
     },
     handleDelete({ $index, row }) {
-      this.$confirm('确定删除?', 'Warning', {
+      this.$confirm('确定删除?', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       })
         .then(async() => {
-          deleteRole({ id: row.id }).then(res => {
+          windowDeleteApi({ id: row.id }).then(res => {
             this.$message({
               type: 'success',
               message: '删除成功!'
             })
-            this.getRoleList()
+            this.getWindowList()
           })
         })
         .catch(err => { console.error(err) })

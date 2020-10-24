@@ -1,9 +1,10 @@
 import request from '@/utils/request'
 
-export function getRoutes() {
+export function getRoutes(data) {
   return request({
-    url: '/vue-element-admin/routes',
-    method: 'get'
+    url: '/v2/menu/list',
+    method: 'post',
+    data
   })
 }
 

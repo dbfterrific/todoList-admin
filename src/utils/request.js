@@ -21,6 +21,10 @@ service.interceptors.request.use(
       // please modify it according to the actual situation
       config.headers['X-Token'] = getToken()
     }
+    const systemToken = store.getters.token || ''
+    let ua = `wechat|1.0|1.0|wx|device|cn|0|${systemToken}|com.admin|${new Date()}|00000`
+    ua = encodeURI(ua)
+    config.headers['ua'] = ua
     return config
   },
   error => {
@@ -46,9 +50,9 @@ service.interceptors.response.use(
     const res = response.data
 
     // if the custom code is not 20000, it is judged as an error.
-    if (res.code !== 20000) {
+    if (res.ok !== 1) {
       Message({
-        message: res.message || 'Error',
+        message: res.msg || 'Error',
         type: 'error',
         duration: 5 * 1000
       })
@@ -66,7 +70,7 @@ service.interceptors.response.use(
           })
         })
       }
-      return Promise.reject(new Error(res.message || 'Error'))
+      return Promise.reject(new Error(res.msg || 'Error'))
     } else {
       return res
     }
