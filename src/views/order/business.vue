@@ -13,11 +13,11 @@
           {{ scope.row.title }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="业务背景图">
+      <!--       <el-table-column align="center" label="业务背景图">
         <template slot-scope="scope">
           <img :src="scope.row.cover" alt="" srcset="">
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
           <!-- <el-button type="primary" size="small" @click="handleEdit(scope)">编辑</el-button> -->
@@ -44,9 +44,9 @@
         <el-form-item label="业务介绍">
           <el-input v-model="addBusiness.intro" placeholder="业务介绍" />
         </el-form-item>
-        <el-form-item label="业务icon">
+        <!-- <el-form-item label="业务icon">
           <el-input v-model="addBusiness.cover" placeholder="业务icon" />
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="业务前缀">
           <el-input v-model="addBusiness.flag" placeholder="业务前缀" />
         </el-form-item>
