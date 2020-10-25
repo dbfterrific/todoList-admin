@@ -90,3 +90,12 @@ export function auditRejectApi(data) {
     data
   })
 }
+
+// 审核拒绝
+export function qrCodeApi(data) {
+  return request({
+    url: '/v1/token/qr',
+    method: 'post',
+    data
+  })
+}
