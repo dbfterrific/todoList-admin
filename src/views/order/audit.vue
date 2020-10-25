@@ -26,18 +26,23 @@
       </el-table-column>
       <el-table-column align="center" label="创建时间">
         <template slot-scope="scope">
-          {{ scope.row.create_time }}
+          {{ scope.row.createTime }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="审核时间">
         <template slot-scope="scope">
-          {{ scope.row.audit_time }}
+          {{ scope.row.auditTime }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="审核状态">
+        <template slot-scope="scope">
+          {{ scope.row.auditStatusName }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
-          <el-button type="primary" size="small" @click="handleAudit(scope, '1')">通过</el-button>
-          <el-button type="danger" size="small" @click="handleAudit(scope, '0')">拒绝</el-button>
+          <el-button v-if="scope.row.auditStatus == 0" type="primary" size="small" @click="handleAudit(scope, '1')">通过</el-button>
+          <el-button v-if="scope.row.auditStatus == 0" type="danger" size="small" @click="handleAudit(scope, '0')">拒绝</el-button>
         </template>
       </el-table-column>
     </el-table>
