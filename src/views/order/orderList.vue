@@ -8,15 +8,9 @@
           {{ scope.row.id }}
         </template>
       </el-table-column>
-      <el-table-column prop="nickname" align="header-center" label="用户昵称" />
       <el-table-column align="center" label="订单编号">
         <template slot-scope="scope">
           {{ scope.row.orderNo }}
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="业务id">
-        <template slot-scope="scope">
-          {{ scope.row.businessId }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="订单类型">
@@ -24,6 +18,7 @@
           {{ scope.row.type }}
         </template>
       </el-table-column>
+      <el-table-column prop="nickname" align="header-center" label="用户昵称" />
       <el-table-column align="center" label="预约时间">
         <template slot-scope="scope">
           {{ scope.row.bookingDate }}
@@ -31,12 +26,17 @@
       </el-table-column>
       <el-table-column align="center" label="预约状态">
         <template slot-scope="scope">
-          {{ scope.row.orderStatus }}
+          {{ scope.row.orderStatusName }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="窗口id">
+      <el-table-column align="center" label="业务">
         <template slot-scope="scope">
-          {{ scope.row.windowId }}
+          {{ scope.row.businessName }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="窗口">
+        <template slot-scope="scope">
+          {{ scope.row.windowName }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="开始时间">
@@ -54,14 +54,9 @@
           {{ scope.row.createTime }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="更新时间">
-        <template slot-scope="scope">
-          {{ scope.row.updateTime }}
-        </template>
-      </el-table-column>
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
-          <el-button type="primary" size="small" @click="handleOrderCall(scope)">叫号</el-button>
+          <el-button v-if="scope.row.orderStatus == 1" type="primary" size="small" @click="handleOrderCall(scope)">叫号</el-button>
         </template>
       </el-table-column>
     </el-table>
