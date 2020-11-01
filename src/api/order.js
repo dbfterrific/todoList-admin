@@ -99,3 +99,47 @@ export function qrCodeApi(data) {
     data
   })
 }
+
+// 队列列表
+export function queueApi(data) {
+  return request({
+    url: '/v2/order/queue',
+    method: 'post',
+    data
+  })
+}
+
+// 员工单日完成业务量
+export function userDataApi(data) {
+  return request({
+    url: '/v2/stat/user',
+    method: 'post',
+    data
+  })
+}
+
+// 业务量
+export function eventDataApi(data) {
+  return request({
+    url: '/v2/stat/order',
+    method: 'post',
+    data
+  })
+}
+
+// 获取设置预约期限
+export function getDateApi(data) {
+  return request({
+    url: '/v2/config/get-date-config',
+    method: 'post',
+    data
+  })
+}
+// 设置预约期限
+export function setDataApi(data) {
+  return request({
+    url: '/v2/config/set-date-config',
+    method: 'post',
+    data
+  })
+}
