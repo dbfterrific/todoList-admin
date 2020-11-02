@@ -8,30 +8,29 @@
           {{ scope.row.id }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="标题">
+      <el-table-column align="center" label="窗口名称">
         <template slot-scope="scope">
           {{ scope.row.title }}
         </template>
       </el-table-column>
-      <el-table-column prop="window_no" align="header-center" label="窗口编号" />
-      <el-table-column align="center" label="业务ID">
+      <el-table-column align="center" label="窗口编号">
         <template slot-scope="scope">
-          {{ scope.row.businessData.id }}
+          {{ scope.row.windowNo }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="业务标题">
+      <el-table-column align="center" label="业务名称">
         <template slot-scope="scope">
           {{ scope.row.businessData.title }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="创建时间">
         <template slot-scope="scope">
-          {{ scope.row.create_time }}
+          {{ scope.row.createTime }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="更新时间">
         <template slot-scope="scope">
-          {{ scope.row.update_time }}
+          {{ scope.row.updateTime }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="操作">

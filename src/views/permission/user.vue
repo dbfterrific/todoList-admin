@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" @click="handleAddUser">新增用户</el-button>
+    <el-button type="primary" @click="handleAddUser(0)">新增用户</el-button>
 
     <el-table :data="userList" style="width: 100%;margin-top:30px;" border>
       <el-table-column align="center" label="用户id">
@@ -46,6 +46,7 @@
       </el-table-column>
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
+          <el-button type="danger" size="small" @click="handleAddUser(scope.row.id)">编辑</el-button>
           <el-button type="danger" size="small" @click="handleDelete(scope)">删除</el-button>
         </template>
       </el-table-column>
@@ -63,6 +64,9 @@
 
     <el-dialog :visible.sync="dialogVisible" :title="'新增用户'" @close="onClose">
       <el-form :model="addUser" label-width="80px" label-position="left">
+        <el-form-item label="ID">
+          <el-input v-model="addUser.id" placeholder="用户ID" />
+        </el-form-item>
         <el-form-item label="用户名">
           <el-input v-model="addUser.username" placeholder="用户名" />
         </el-form-item>
@@ -130,7 +134,8 @@ export default {
       this.pageSize = res.data.pageSize
       this.userList = res.list
     },
-    handleAddUser() {
+    handleAddUser(id) {
+      addUser.id = id
       this.dialogVisible = true
     },
     confirmUser() {

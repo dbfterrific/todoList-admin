@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" size="small" @click="handleOrderCall">叫号</el-button> 您当前所在窗口: {{ windowName }}
+    <el-button type="primary" size="small" @click="handleOrderCall">叫号</el-button> 您当前所在窗口: <span style="color:red;">{{ windowName }}</span>
 
     <el-table :data="orderList" style="width: 100%;margin-top:30px;" border>
       <el-table-column align="center" label="订单id">
