@@ -13,7 +13,7 @@
           {{ scope.row.name }}
         </template>
       </el-table-column>
-      <el-table-column prop="window_no" align="header-center" label="窗口编号" />
+      <!-- <el-table-column prop="window_no" align="header-center" label="窗口编号" /> -->
       <el-table-column align="center" label="菜单">
         <template slot-scope="scope">
           {{ scope.row.menu }}

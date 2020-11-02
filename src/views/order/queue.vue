@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" size="small" @click="handleOrderCall">叫号</el-button>
+    <el-button type="primary" size="small" @click="handleOrderCall">叫号</el-button> 您当前所在窗口: {{ windowName }}
 
     <el-table :data="orderList" style="width: 100%;margin-top:30px;" border>
       <el-table-column align="center" label="订单id">
@@ -90,6 +90,7 @@ export default {
       },
       routes: [],
       orderList: [],
+      windowName: '', // 窗口
       dialogVisible: false,
       checkStrictly: false,
       defaultProps: {
@@ -123,6 +124,7 @@ export default {
       this.total = res.data.count
       this.pageSize = res.data.pageSize
       this.orderList = res.list
+      this.windowName = res.data.windowName
     },
     handleOrderCall({ $index, row }) {
       this.$confirm('确定叫号?', {

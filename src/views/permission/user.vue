@@ -34,14 +34,14 @@
           {{ scope.row.updatedAt }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="角色id">
-        <template slot-scope="scope">
-          {{ scope.row.roleId }}
-        </template>
-      </el-table-column>
       <el-table-column align="center" label="角色名称">
         <template slot-scope="scope">
           {{ scope.row.roleName }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="所在窗口">
+        <template slot-scope="scope">
+          {{ scope.row.windowName }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="操作">
