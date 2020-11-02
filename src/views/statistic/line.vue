@@ -56,56 +56,8 @@ export default {
   methods: {
     initChart() {
       this.chart = echarts.init(document.getElementById(this.id))
-      
-      // {
-      //     name: this.legendData[0],
-      //     type: 'line',
-      //     stack: 'total',
-      //     symbolSize: 10,
-      //     symbol: 'circle',
-      //     itemStyle: {
-      //       normal: {
-      //         color: 'rgba(252,230,48,1)',
-      //         barBorderRadius: 0,
-      //         label: {
-      //           show: true,
-      //           position: 'top',
-      //           formatter(p) {
-      //             return p.value > 0 ? p.value : ''
-      //           }
-      //         }
-      //       }
-      //     },
-      //     data: this.seriesData
-      //   }
-
-      const _seriesData = this.legendData.map((item, index) => {
-        return {
-          name: item,
-          type: 'line',
-          stack: 'total',
-          symbolSize: 10,
-          symbol: 'circle',
-          itemStyle: {
-            normal: {
-              color: '#' + Math.floor(Math.random()*16777215).toString(16),
-              barBorderRadius: 0,
-              label: {
-                show: true,
-                position: 'top',
-                formatter(p) {
-                  return p.value > 0 ? p.value : ''
-                }
-              }
-            }
-          },
-          data: this.seriesData[index]
-        }
-      })
-
-
       this.chart.setOption({
-        backgroundColor: '#344b58',
+        // backgroundColor: '#344b58',
         title: {
           text: '',
           x: '20',
@@ -189,28 +141,6 @@ export default {
           }
         }],
         series: this.seriesData
-        // series: [{
-        //   name: this.legendData[0],
-        //   type: 'line',
-        //   stack: 'total',
-        //   symbolSize: 10,
-        //   symbol: 'circle',
-        //   itemStyle: {
-        //     normal: {
-        //       color: 'rgba(252,230,48,1)',
-        //       barBorderRadius: 0,
-        //       label: {
-        //         show: true,
-        //         position: 'top',
-        //         formatter(p) {
-        //           return p.value > 0 ? p.value : ''
-        //         }
-        //       }
-        //     }
-        //   },
-        //   data: this.seriesData
-        // }
-        // ]
       })
     }
   }
