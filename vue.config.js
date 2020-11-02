@@ -38,7 +38,10 @@ module.exports = {
     },
     proxy: {
       '/api': {
-        target: 'http://yapi.yuan-chuang.com/mock/30',
+        // target: 'http://yapi.yuan-chuang.com/mock/30',
+        target: 'http://admin-wx.yuan-chuang.com',
+        // target: 'http://api.mybooking.com',
+        changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
         pathRewrite: {
             '^/api' : '/api'
         }
