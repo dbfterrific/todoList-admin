@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <!-- <el-button type="primary" size="small" @click="handleOrderCall">叫号</el-button> -->
+    <el-button type="primary" size="small" @click="handleOrderCall">叫号</el-button>
 
     <el-table :data="orderList" style="width: 100%;margin-top:30px;" border>
       <el-table-column align="center" label="订单id">
@@ -54,11 +54,11 @@
           {{ scope.row.createTime }}
         </template>
       </el-table-column>
-      <!-- <el-table-column align="center" label="操作">
+      <el-table-column align="center" label="操作">
         <template slot-scope="scope">
           <el-button v-if="scope.row.orderStatus == 1" type="primary" size="small" @click="handleOrderCall(scope)">叫号</el-button>
         </template>
-      </el-table-column> -->
+      </el-table-column>
     </el-table>
     <div>
       <el-pagination
@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import { orderListApi, orderCallApi } from '@/api/order'
+import { queueApi, orderCallApi } from '@/api/order'
 import store from '@/store'
 
 export default {
@@ -118,7 +118,7 @@ export default {
       }
     },
     async getOrderList() {
-      const res = await orderListApi({ page: this.page, pageSize: this.pageSize })
+      const res = await queueApi({ page: this.page, pageSize: this.pageSize })
       this.page = res.data.page
       this.total = res.data.count
       this.pageSize = res.data.pageSize
