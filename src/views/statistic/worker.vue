@@ -121,7 +121,7 @@ export default {
         return {
           name: item,
           type: 'line',
-          stack: 'total',
+          // stack: 'total',
           symbolSize: 10,
           symbol: 'circle',
           itemStyle: {
@@ -141,7 +141,7 @@ export default {
         }
       })
 
-      this.seriesData = _seriesData
+      this.seriesData = [..._seriesData]
 
       this.canShow = true
     }
