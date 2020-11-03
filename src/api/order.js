@@ -19,7 +19,7 @@ export function windowListApi(data) {
 // 删除窗口
 export function windowDeleteApi(data) {
   return request({
-    url: '/v1/window/delete',
+    url: '/v2/window/delete',
     method: 'post',
     data
   })
