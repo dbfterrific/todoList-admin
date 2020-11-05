@@ -20,7 +20,7 @@
       <el-table-column align="center" label="图片">
         <template slot-scope="scope">
           <div v-for="item in scope.row.image" :key="item" style="padding: 5px">
-            <img :src="item" alt="" sizes="" srcset="">
+            <img :src="item.url" alt="" sizes="" srcset="">
           </div>
         </template>
       </el-table-column>

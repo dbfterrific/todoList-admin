@@ -8,9 +8,24 @@
           {{ scope.row.id }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="标题">
+      <el-table-column align="center" label="业务名称">
         <template slot-scope="scope">
           {{ scope.row.title }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="业务介绍">
+        <template slot-scope="scope">
+          {{ scope.row.intro }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="前缀标识">
+        <template slot-scope="scope">
+          {{ scope.row.flag }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="上传提示">
+        <template slot-scope="scope">
+          {{ scope.row.uploadIntro }}
         </template>
       </el-table-column>
       <!--       <el-table-column align="center" label="业务背景图">
@@ -37,7 +52,7 @@
     </div>
 
     <el-dialog :visible.sync="dialogVisible" :title="'新增业务'" @close="onClose">
-      <el-form :model="addBusiness" label-width="80px" label-position="left">
+      <el-form :model="addBusiness" label-width="120px" label-position="left">
         <el-form-item label="业务名称">
           <el-input v-model="addBusiness.title" placeholder="业务名称" />
         </el-form-item>
@@ -49,6 +64,9 @@
         </el-form-item> -->
         <el-form-item label="业务前缀">
           <el-input v-model="addBusiness.flag" placeholder="业务前缀" />
+        </el-form-item>
+        <el-form-item label="上传附件提示语">
+          <el-input v-model="addBusiness.uploadIntro" placeholder="上传附件提示语" />
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
